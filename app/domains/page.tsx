@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 
 export default async function DomainsPage() {
   const { userId } = auth();
