@@ -1,0 +1,197 @@
+{
+  "achievements": [
+    {
+      "id": "first_steps",
+      "name": "First Steps",
+      "description": "Complete your first task",
+      "type": "general",
+      "xpBonus": 50,
+      "icon": "Star",
+      "requirements": {
+        "type": "task_completion",
+        "count": 1
+      }
+    },
+    {
+      "id": "streak_starter",
+      "name": "Streak Starter",
+      "description": "Maintain a 3-day streak",
+      "type": "streak_based",
+      "xpBonus": 75,
+      "icon": "Flame",
+      "requirements": {
+        "type": "streak",
+        "minStreak": 3
+      }
+    },
+    {
+      "id": "week_warrior",
+      "name": "Week Warrior",
+      "description": "Complete tasks for 7 consecutive days",
+      "type": "streak_based",
+      "xpBonus": 150,
+      "icon": "Zap",
+      "requirements": {
+        "type": "streak",
+        "minStreak": 7
+      }
+    },
+    {
+      "id": "level_up_legend",
+      "name": "Level Up Legend",
+      "description": "Reach level 10",
+      "type": "level_based",
+      "xpBonus": 200,
+      "icon": "Trophy",
+      "requirements": {
+        "type": "level",
+        "minLevel": 10
+      }
+    },
+    {
+      "id": "meditation_master",
+      "name": "Meditation Master",
+      "description": "Complete 10 meditation sessions",
+      "type": "domain_specific",
+      "domainId": "mind",
+      "xpBonus": 100,
+      "icon": "Brain",
+      "requirements": {
+        "type": "domain_tasks",
+        "domainId": "mind",
+        "count": 10
+      }
+    },
+    {
+      "id": "workout_warrior",
+      "name": "Workout Warrior",
+      "description": "Complete 20 workout sessions",
+      "type": "domain_specific",
+      "domainId": "body",
+      "xpBonus": 100,
+      "icon": "Dumbbell",
+      "requirements": {
+        "type": "domain_tasks",
+        "domainId": "body",
+        "count": 20
+      }
+    },
+    {
+      "id": "gratitude_guru",
+      "name": "Gratitude Guru",
+      "description": "Write 30 gratitude entries",
+      "type": "domain_specific",
+      "domainId": "soul",
+      "xpBonus": 100,
+      "icon": "Heart",
+      "requirements": {
+        "type": "domain_tasks",
+        "domainId": "soul",
+        "count": 30
+      }
+    },
+    {
+      "id": "productivity_pro",
+      "name": "Productivity Pro",
+      "description": "Complete 50 deep work sessions",
+      "type": "domain_specific",
+      "domainId": "career",
+      "xpBonus": 100,
+      "icon": "Briefcase",
+      "requirements": {
+        "type": "domain_tasks",
+        "domainId": "career",
+        "count": 50
+      }
+    },
+    {
+      "id": "learning_legend",
+      "name": "Learning Legend",
+      "description": "Complete 25 skill-building tasks",
+      "type": "domain_specific",
+      "domainId": "skills",
+      "xpBonus": 100,
+      "icon": "BookOpen",
+      "requirements": {
+        "type": "domain_tasks",
+        "domainId": "skills",
+        "count": 25
+      }
+    },
+    {
+      "id": "creation_champion",
+      "name": "Creation Champion",
+      "description": "Complete 15 creative projects",
+      "type": "domain_specific",
+      "domainId": "creative",
+      "xpBonus": 100,
+      "icon": "Sparkles",
+      "requirements": {
+        "type": "domain_tasks",
+        "domainId": "creative",
+        "count": 15
+      }
+    },
+    {
+      "id": "perfectionist",
+      "name": "Perfectionist",
+      "description": "Complete 100 tasks successfully",
+      "type": "general",
+      "xpBonus": 300,
+      "icon": "Target",
+      "requirements": {
+        "type": "task_completion",
+        "count": 100,
+        "result": "success"
+      }
+    },
+    {
+      "id": "marathon_runner",
+      "name": "Marathon Runner",
+      "description": "Maintain a 30-day streak",
+      "type": "streak_based",
+      "xpBonus": 500,
+      "icon": "Award",
+      "requirements": {
+        "type": "streak",
+        "minStreak": 30
+      }
+    },
+    {
+      "id": "domain_master",
+      "name": "Domain Master",
+      "description": "Complete 50 tasks in a single domain",
+      "type": "domain_specific",
+      "xpBonus": 250,
+      "icon": "Crown",
+      "requirements": {
+        "type": "domain_tasks",
+        "count": 50
+      }
+    },
+    {
+      "id": "legendary_status",
+      "name": "Legendary Status",
+      "description": "Reach the maximum level",
+      "type": "level_based",
+      "xpBonus": 1000,
+      "icon": "Gem",
+      "requirements": {
+        "type": "level",
+        "minLevel": 50
+      }
+    },
+    {
+      "id": "balanced_warrior",
+      "name": "Balanced Warrior",
+      "description": "Complete tasks in all 6 domains",
+      "type": "general",
+      "xpBonus": 400,
+      "icon": "Shield",
+      "requirements": {
+        "type": "all_domains",
+        "minTasksPerDomain": 5
+      }
+    }
+  ]
+}

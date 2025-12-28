@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Test utility */
+.test-border {
+  @apply border-border;
+}

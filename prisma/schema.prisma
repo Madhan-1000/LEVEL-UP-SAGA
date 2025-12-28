@@ -1,0 +1,259 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TaskStatus {
+  pending
+  active
+  completed
+  failed
+  cheated
+}
+
+enum TaskResult {
+  success
+  failure
+  timeout
+  cheated
+}
+
+enum AchievementType {
+  general
+  domain_specific
+  level_based
+  streak_based
+}
+
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  email     String?
+  username  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  progress     UserProgress?
+  domains      UserDomain[]
+  tasks        Task[]
+  achievements UserAchievement[]
+  reviews      DailyReview[]
+  taskExperiences TaskExperience[]
+  timelineEntries TimelineEntry[]
+}
+
+model UserProgress {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  currentLevel  Int      @default(1)
+  currentXp     Int      @default(0)
+  totalXpEarned Int      @default(0)
+
+  currentStreak Int      @default(0)
+  longestStreak Int      @default(0)
+
+  lastActivityAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Domain {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String
+  icon        String?
+  color       String?
+  priority    Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userDomains   UserDomain[]
+  taskTemplates TaskTemplate[]
+  achievements  Achievement[]
+  @@map("domains")
+}
+
+model UserDomain {
+  id        String   @id @default(cuid())
+  userId    String
+  domainId  String
+  locked    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  domain Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, domainId])
+  @@index([userId])
+  @@index([domainId])
+}
+
+model TaskTemplate {
+  id          String  @id @default(cuid())
+  domainId    String
+  name        String
+  description String
+  xpReward    Int
+
+  // Your code treats these as strings (e.g. "easy", "medium", "hard")
+  difficulty String
+
+  // Your code treats these as strings (e.g. "daily", "timed", "streak")
+  taskType   String
+
+  isActive Boolean @default(true)
+
+  // NEW: permanent tasks
+  isPermanent Boolean @default(false)
+
+  // NEW: template-level default deadline time like "06:00"
+  defaultDeadlineTime String?
+
+  // Your code reads selectedTask.config?.timeLimit
+  config Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  domain Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  tasks  Task[]
+
+  @@unique([name, domainId])
+  @@index([domainId])
+}
+
+model Task {
+  id         String     @id @default(cuid())
+  userId     String
+  templateId String
+
+  status TaskStatus @default(pending)
+  result TaskResult?
+
+  assignedAt DateTime @default(now())
+  startedAt  DateTime?
+  deadlineAt DateTime?
+
+  completedAt      DateTime?
+  completionSpeed  Int?
+  flaggedAsCheat   Boolean   @default(false)
+
+  userRating  Int?
+  reviewNotes String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  template TaskTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  experiences TaskExperience[]
+
+  @@index([userId, status])
+  @@index([templateId])
+
+  // Helpful if you want to prevent duplicates per day (optional; not enforced now)
+  // @@index([userId, assignedAt])
+
+  @@map("tasks")
+}
+
+model TaskExperience {
+  id        String   @id @default(cuid())
+  userId    String
+  taskId    String
+  content   String?
+  skipped   Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, taskId])
+  @@index([taskId])
+  @@index([userId])
+}
+
+model Achievement {
+  id          String          @id @default(cuid())
+  name        String
+  description String
+  icon        String?
+  xpBonus     Int             @default(0)
+
+  type AchievementType
+  requirements Json?
+
+  isActive Boolean @default(true)
+
+  domainId String?
+  domain   Domain? @relation(fields: [domainId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users UserAchievement[]
+
+  @@index([domainId])
+}
+
+model UserAchievement {
+  id            String   @id @default(cuid())
+  userId        String
+  achievementId String
+  unlockedAt    DateTime @default(now())
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
+  @@index([userId])
+  @@index([achievementId])
+}
+
+model DailyReview {
+  id                String   @id @default(cuid())
+  userId            String
+  date              DateTime
+  overallSatisfaction Int
+  tasksCompleted    Int      @default(0)
+  tasksFailed       Int      @default(0)
+  reflectionNotes   String?
+  hoursFocused      Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId])
+}
+
+model TimelineEntry {
+  id         String   @id @default(cuid())
+  userId     String
+  day        DateTime // start-of-day bucket
+  occurredAt DateTime // precise timestamp for ordering
+  title      String
+  description String?
+  kind       String? // optional tag/type
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, day])
+  @@index([userId, day, occurredAt])
+}

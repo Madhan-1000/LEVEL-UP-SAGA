@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+/* ✅ Tailwind v3 - NO @import "tailwindcss" */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* shadcn/ui CSS Variables */
+@layer base {
+  :root {
+    --background: 220 30% 6%;
+    --foreground: 210 40% 90%;
+    --card: 220 35% 10%;
+    --card-foreground: 210 40% 90%;
+    --popover: 220 35% 8%;
+    --popover-foreground: 210 40% 90%;
+    --primary: 210 100% 55%;
+    --primary-foreground: 220 30% 6%;
+    --secondary: 200 80% 45%;
+    --secondary-foreground: 220 30% 6%;
+    --muted: 220 25% 18%;
+    --muted-foreground: 210 30% 55%;
+    --accent: 215 90% 50%;
+    --accent-foreground: 210 40% 90%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 50% 25%;
+    --input: 220 30% 14%;
+    --ring: 210 100% 55%;
+    --radius: 0.5rem;
+
+    /* Blue cyberpunk theme tokens */
+    --blue-glow: 210 100% 55%;
+    --blue-dark: 220 40% 12%;
+    --blue-accent: 200 90% 50%;
+    --glow-blue: 0 0 30px hsl(210 100% 55% / 0.6), 0 0 60px hsl(210 100% 55% / 0.4), 0 0 120px hsl(210 100% 55% / 0.2);
+    --glow-subtle: 0 0 20px hsl(210 100% 55% / 0.4);
+    --glow-intense: 0 0 40px hsl(210 100% 55% / 0.8), 0 0 80px hsl(210 100% 55% / 0.6), 0 0 160px hsl(210 100% 55% / 0.4);
+    --gradient-blue: linear-gradient(135deg, hsl(210 100% 55%) 0%, hsl(200 80% 45%) 100%);
+    --gradient-dark: linear-gradient(180deg, hsl(220 30% 6%) 0%, hsl(220 35% 10%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(220 35% 12%) 0%, hsl(220 35% 8%) 100%);
+
+    /* Sidebar tokens */
+    --sidebar-background: 220 35% 8%;
+    --sidebar-foreground: 210 40% 90%;
+    --sidebar-primary: 210 100% 55%;
+    --sidebar-primary-foreground: 220 30% 6%;
+    --sidebar-accent: 200 80% 45%;
+    --sidebar-accent-foreground: 210 40% 90%;
+    --sidebar-border: 210 50% 25%;
+    --sidebar-ring: 210 100% 55%;
+  }
+
+  .dark {
+    --background: 220 30% 6%;
+    --foreground: 210 40% 90%;
+    --card: 220 35% 10%;
+    --card-foreground: 210 40% 90%;
+    --popover: 220 35% 8%;
+    --popover-foreground: 210 40% 90%;
+    --primary: 210 100% 55%;
+    --primary-foreground: 220 30% 6%;
+    --secondary: 200 80% 45%;
+    --secondary-foreground: 220 30% 6%;
+    --muted: 220 25% 18%;
+    --muted-foreground: 210 30% 55%;
+    --accent: 215 90% 50%;
+    --accent-foreground: 210 40% 90%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 50% 25%;
+    --input: 220 30% 14%;
+    --ring: 210 100% 55%;
+  }
+}
+
+/* Base styles */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Rajdhani', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+  }
+  code, pre, .mono {
+    font-family: 'Share Tech Mono', monospace;
+  }
+}
+
+/* Cyberpunk Components */
+@layer components {
+  .cyber-border {
+    @apply border border-primary/50 relative;
+    box-shadow: var(--glow-blue);
+  }
+  .cyber-border::before {
+    content: '';
+    @apply absolute -inset-[1px] pointer-events-none;
+    background: linear-gradient(90deg, hsl(var(--primary)) 0%, transparent 50%, hsl(var(--primary)) 100%);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    padding: 1px;
+  }
+  .glow-text {
+    text-shadow:
+      0 0 15px hsl(var(--primary) / 0.8),
+      0 0 30px hsl(var(--primary) / 0.6),
+      0 0 60px hsl(var(--primary) / 0.4);
+  }
+  .glow-text-intense {
+    text-shadow:
+      0 0 20px hsl(var(--primary) / 1.0),
+      0 0 40px hsl(var(--primary) / 0.8),
+      0 0 80px hsl(var(--primary) / 0.6);
+  }
+  .cyber-card {
+    @apply bg-card/80 backdrop-blur-xl border border-primary/30;
+    background: var(--gradient-card);
+    box-shadow: var(--glow-subtle);
+  }
+  .cyber-card:hover {
+    box-shadow: var(--glow-blue);
+  }
+  .cyber-button {
+    @apply relative overflow-hidden font-orbitron font-semibold uppercase tracking-wider;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+  .grid-overlay {
+    background-image: 
+      linear-gradient(hsl(var(--primary) / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--primary) / 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-blue);
+  }
+  .status-frame {
+    @apply relative border-2 border-primary/40 bg-card/90 backdrop-blur-xl;
+    box-shadow: 
+      inset 0 0 30px hsl(var(--primary) / 0.05),
+      0 0 20px hsl(var(--primary) / 0.2);
+  }
+  .status-frame::before {
+    content: '';
+    @apply absolute inset-0 pointer-events-none;
+    background: 
+      radial-gradient(circle at 20% 20%, hsl(var(--primary) / 0.1) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, hsl(var(--primary) / 0.05) 0%, transparent 40%);
+  }
+}
+
+/* Custom Fonts */
+@layer utilities {
+  .font-orbitron { font-family: 'Orbitron', sans-serif; }
+  .font-rajdhani { font-family: 'Rajdhani', sans-serif; }
+  .font-mono-tech { font-family: 'Share Tech Mono', monospace; }
+}
+
+/* shadcn/ui Animations */
+@layer utilities {
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
+  }
+  .animate-accordion-down { animation: accordion-down 0.2s ease-out; }
+  .animate-accordion-up { animation: accordion-up 0.2s ease-out; }
+}
+
+/* Cyberpunk Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 20px hsl(var(--primary) / 0.6),
+      0 0 40px hsl(var(--primary) / 0.4),
+      0 0 80px hsl(var(--primary) / 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 30px hsl(var(--primary) / 0.8),
+      0 0 60px hsl(var(--primary) / 0.6),
+      0 0 120px hsl(var(--primary) / 0.4),
+      0 0 180px hsl(var(--primary) / 0.2);
+  }
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Page transition utility */
+@keyframes page-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-fade {
+  animation: page-fade 0.35s ease;
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.float { animation: float 2s ease-in-out infinite; }
+.pulse-glow { animation: pulse-glow 1s ease-in-out infinite; }
+.animate-fade-in { animation: fade-in 0.8s ease-out; }
+.animate-fade-in-up { animation: fade-in-up 0.8s ease-out; }

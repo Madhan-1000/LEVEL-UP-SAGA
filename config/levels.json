@@ -1,0 +1,302 @@
+[
+  {
+    "level": 1,
+    "xpRequired": 0,
+    "title": "Initiate",
+    "description": "Welcome to Level Up Saga"
+  },
+  {
+    "level": 2,
+    "xpRequired": 100,
+    "title": "Runner",
+    "description": "Your journey begins"
+  },
+  {
+    "level": 3,
+    "xpRequired": 150,
+    "title": "Apprentice",
+    "description": "Learning the ways"
+  },
+  {
+    "level": 4,
+    "xpRequired": 200,
+    "title": "Warrior",
+    "description": "Battling daily challenges"
+  },
+  {
+    "level": 5,
+    "xpRequired": 250,
+    "title": "Champion",
+    "description": "Mastering your domains"
+  },
+  {
+    "level": 6,
+    "xpRequired": 300,
+    "title": "Hero",
+    "description": "Inspiring others"
+  },
+  {
+    "level": 7,
+    "xpRequired": 350,
+    "title": "Legend",
+    "description": "Creating lasting change"
+  },
+  {
+    "level": 8,
+    "xpRequired": 400,
+    "title": "Master",
+    "description": "Expert in self-improvement"
+  },
+  {
+    "level": 9,
+    "xpRequired": 450,
+    "title": "Grandmaster",
+    "description": "Mentoring others"
+  },
+  {
+    "level": 10,
+    "xpRequired": 500,
+    "title": "Elite",
+    "description": "Peak performance achieved"
+  },
+  {
+    "level": 11,
+    "xpRequired": 600,
+    "title": "Ascendant",
+    "description": "Transcending limitations"
+  },
+  {
+    "level": 12,
+    "xpRequired": 700,
+    "title": "Transcendent",
+    "description": "Beyond ordinary achievement"
+  },
+  {
+    "level": 13,
+    "xpRequired": 800,
+    "title": "Illuminated",
+    "description": "Wisdom and clarity"
+  },
+  {
+    "level": 14,
+    "xpRequired": 900,
+    "title": "Enlightened",
+    "description": "Deep understanding"
+  },
+  {
+    "level": 15,
+    "xpRequired": 1000,
+    "title": "Sage",
+    "description": "Sharing knowledge"
+  },
+  {
+    "level": 16,
+    "xpRequired": 1150,
+    "title": "Oracle",
+    "description": "Foreseeing success"
+  },
+  {
+    "level": 17,
+    "xpRequired": 1300,
+    "title": "Prophet",
+    "description": "Guiding the path"
+  },
+  {
+    "level": 18,
+    "xpRequired": 1450,
+    "title": "Visionary",
+    "description": "Seeing the future"
+  },
+  {
+    "level": 19,
+    "xpRequired": 1600,
+    "title": "Architect",
+    "description": "Building greatness"
+  },
+  {
+    "level": 20,
+    "xpRequired": 1800,
+    "title": "Titan",
+    "description": "Unstoppable force"
+  },
+  {
+    "level": 21,
+    "xpRequired": 2000,
+    "title": "Colossus",
+    "description": "Towering achievement"
+  },
+  {
+    "level": 22,
+    "xpRequired": 2200,
+    "title": "Behemoth",
+    "description": "Massive impact"
+  },
+  {
+    "level": 23,
+    "xpRequired": 2400,
+    "title": "Leviathan",
+    "description": "Ocean of wisdom"
+  },
+  {
+    "level": 24,
+    "xpRequired": 2600,
+    "title": "Phoenix",
+    "description": "Rising from challenges"
+  },
+  {
+    "level": 25,
+    "xpRequired": 2850,
+    "title": "Myth",
+    "description": "Legendary status"
+  },
+  {
+    "level": 26,
+    "xpRequired": 3100,
+    "title": "Deity",
+    "description": "Divine inspiration"
+  },
+  {
+    "level": 27,
+    "xpRequired": 3350,
+    "title": "Immortal",
+    "description": "Eternal legacy"
+  },
+  {
+    "level": 28,
+    "xpRequired": 3600,
+    "title": "Celestial",
+    "description": "Heavenly achievements"
+  },
+  {
+    "level": 29,
+    "xpRequired": 3900,
+    "title": "Cosmic",
+    "description": "Universal impact"
+  },
+  {
+    "level": 30,
+    "xpRequired": 4200,
+    "title": "Nebula",
+    "description": "Stellar performer"
+  },
+  {
+    "level": 31,
+    "xpRequired": 4500,
+    "title": "Galaxy",
+    "description": "System-wide influence"
+  },
+  {
+    "level": 32,
+    "xpRequired": 4850,
+    "title": "Universe",
+    "description": "Infinite potential"
+  },
+  {
+    "level": 33,
+    "xpRequired": 5200,
+    "title": "Multiverse",
+    "description": "Beyond dimensions"
+  },
+  {
+    "level": 34,
+    "xpRequired": 5550,
+    "title": "Omniverse",
+    "description": "All possibilities"
+  },
+  {
+    "level": 35,
+    "xpRequired": 5950,
+    "title": "Supreme",
+    "description": "Ultimate mastery"
+  },
+  {
+    "level": 36,
+    "xpRequired": 6350,
+    "title": "Infinite",
+    "description": "Limitless growth"
+  },
+  {
+    "level": 37,
+    "xpRequired": 6750,
+    "title": "Eternal",
+    "description": "Timeless wisdom"
+  },
+  {
+    "level": 38,
+    "xpRequired": 7200,
+    "title": "Absolute",
+    "description": "Complete understanding"
+  },
+  {
+    "level": 39,
+    "xpRequired": 7650,
+    "title": "Transcendental",
+    "description": "Beyond comprehension"
+  },
+  {
+    "level": 40,
+    "xpRequired": 8150,
+    "title": "Ultimate",
+    "description": "Final frontier"
+  },
+  {
+    "level": 41,
+    "xpRequired": 8650,
+    "title": "Pinnacle",
+    "description": "Highest point"
+  },
+  {
+    "level": 42,
+    "xpRequired": 9200,
+    "title": "Zenith",
+    "description": "Peak of perfection"
+  },
+  {
+    "level": 43,
+    "xpRequired": 9750,
+    "title": "Apex",
+    "description": "Summit achieved"
+  },
+  {
+    "level": 44,
+    "xpRequired": 10350,
+    "title": "Crest",
+    "description": "Riding the wave"
+  },
+  {
+    "level": 45,
+    "xpRequired": 11000,
+    "title": "Summit",
+    "description": "Mountain conquered"
+  },
+  {
+    "level": 46,
+    "xpRequired": 11700,
+    "title": "Everest",
+    "description": "World's highest"
+  },
+  {
+    "level": 47,
+    "xpRequired": 12450,
+    "title": "Olympus",
+    "description": "Home of gods"
+  },
+  {
+    "level": 48,
+    "xpRequired": 13250,
+    "title": "Valhalla",
+    "description": "Hall of heroes"
+  },
+  {
+    "level": 49,
+    "xpRequired": 14100,
+    "title": "Asgard",
+    "description": "Realm of legends"
+  },
+  {
+    "level": 50,
+    "xpRequired": 15000,
+    "title": "Legend",
+    "description": "Eternal champion"
+  }
+]

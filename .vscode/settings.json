@@ -1,0 +1,10 @@
+{
+    "terminal.integrated.defaultProfile.windows": "GitBash",
+"terminal.integrated.profiles.windows": {
+  "GitBash": {
+    "path": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "icon": "terminal-bash"
+  }
+}
+
+}

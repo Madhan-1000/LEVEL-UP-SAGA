@@ -1,0 +1,245 @@
+{
+  "domains": [
+    {
+      "id": "mind",
+      "name": "Mind",
+      "description": "Mental clarity, meditation, mindfulness, and cognitive development",
+      "icon": "Brain",
+      "color": "hsl(180, 100%, 50%)",
+      "taskTemplates": [
+        {
+          "name": "Morning Meditation",
+          "description": "Complete a 10-minute guided meditation session",
+          "difficulty": "easy",
+          "taskType": "timed",
+          "config": { "timeLimit": 600 },
+          "xpReward": 30
+        },
+        {
+          "name": "Reading Session",
+          "description": "Read for 30 minutes on a personal development topic",
+          "difficulty": "medium",
+          "taskType": "timed",
+          "config": { "timeLimit": 1800 },
+          "xpReward": 50
+        },
+        {
+          "name": "Journal Reflection",
+          "description": "Write a 500-word reflection on your day",
+          "difficulty": "medium",
+          "taskType": "daily",
+          "xpReward": 40
+        },
+        {
+          "name": "Learning Challenge",
+          "description": "Learn something new for 45 minutes",
+          "difficulty": "hard",
+          "taskType": "timed",
+          "config": { "timeLimit": 2700 },
+          "xpReward": 80
+        }
+      ]
+    },
+    {
+      "id": "body",
+      "name": "Body",
+      "description": "Physical fitness, nutrition, sleep, and overall health optimization",
+      "icon": "Dumbbell",
+      "color": "hsl(300, 100%, 60%)",
+      "taskTemplates": [
+        {
+          "name": "Quick Workout",
+          "description": "Complete a 15-minute workout session",
+          "difficulty": "easy",
+          "taskType": "timed",
+          "config": { "timeLimit": 900 },
+          "xpReward": 30
+        },
+        {
+          "name": "Healthy Meal Prep",
+          "description": "Prepare nutritious meals for the day",
+          "difficulty": "medium",
+          "taskType": "daily",
+          "xpReward": 40
+        },
+        {
+          "name": "Full Training Session",
+          "description": "Complete a comprehensive 45-minute workout",
+          "difficulty": "medium",
+          "taskType": "timed",
+          "config": { "timeLimit": 2700 },
+          "xpReward": 55
+        },
+        {
+          "name": "Fitness Challenge",
+          "description": "Push your limits with an intense 60-minute session",
+          "difficulty": "hard",
+          "taskType": "timed",
+          "config": { "timeLimit": 3600 },
+          "xpReward": 90
+        }
+      ]
+    },
+    {
+      "id": "soul",
+      "name": "Soul",
+      "description": "Emotional wellness, relationships, gratitude, and inner peace",
+      "icon": "Heart",
+      "color": "hsl(280, 100%, 55%)",
+      "taskTemplates": [
+        {
+          "name": "Gratitude Practice",
+          "description": "Write 5 things you're grateful for",
+          "difficulty": "easy",
+          "taskType": "daily",
+          "xpReward": 25
+        },
+        {
+          "name": "Relationship Check-in",
+          "description": "Reach out to someone important to you",
+          "difficulty": "easy",
+          "taskType": "daily",
+          "xpReward": 30
+        },
+        {
+          "name": "Emotional Processing",
+          "description": "Spend 20 minutes journaling about your emotions",
+          "difficulty": "medium",
+          "taskType": "timed",
+          "config": { "timeLimit": 1200 },
+          "xpReward": 45
+        },
+        {
+          "name": "Deep Reflection",
+          "description": "Conduct a thorough life review session",
+          "difficulty": "hard",
+          "taskType": "timed",
+          "config": { "timeLimit": 1800 },
+          "xpReward": 75
+        }
+      ]
+    },
+    {
+      "id": "career",
+      "name": "Career",
+      "description": "Professional growth, networking, productivity, and goal achievement",
+      "icon": "Briefcase",
+      "color": "hsl(55, 100%, 50%)",
+      "taskTemplates": [
+        {
+          "name": "Daily Planning",
+          "description": "Plan your top 3 priorities for the day",
+          "difficulty": "easy",
+          "taskType": "daily",
+          "xpReward": 25
+        },
+        {
+          "name": "Skill Development",
+          "description": "Work on a professional skill for 30 minutes",
+          "difficulty": "medium",
+          "taskType": "timed",
+          "config": { "timeLimit": 1800 },
+          "xpReward": 45
+        },
+        {
+          "name": "Deep Work Session",
+          "description": "Complete 90 minutes of focused work",
+          "difficulty": "medium",
+          "taskType": "timed",
+          "config": { "timeLimit": 5400 },
+          "xpReward": 60
+        },
+        {
+          "name": "Career Advancement",
+          "description": "Work on a major career goal for 2 hours",
+          "difficulty": "hard",
+          "taskType": "timed",
+          "config": { "timeLimit": 7200 },
+          "xpReward": 85
+        }
+      ]
+    },
+    {
+      "id": "skills",
+      "name": "Skills",
+      "description": "Learning new abilities, hobbies, languages, and expertise areas",
+      "icon": "BookOpen",
+      "color": "hsl(220, 100%, 60%)",
+      "taskTemplates": [
+        {
+          "name": "Quick Study",
+          "description": "Learn something new for 15 minutes",
+          "difficulty": "easy",
+          "taskType": "timed",
+          "config": { "timeLimit": 900 },
+          "xpReward": 30
+        },
+        {
+          "name": "Practice Session",
+          "description": "Practice a skill you've been learning",
+          "difficulty": "medium",
+          "taskType": "timed",
+          "config": { "timeLimit": 1800 },
+          "xpReward": 45
+        },
+        {
+          "name": "Language Learning",
+          "description": "Study a new language for 30 minutes",
+          "difficulty": "medium",
+          "taskType": "timed",
+          "config": { "timeLimit": 1800 },
+          "xpReward": 50
+        },
+        {
+          "name": "Mastery Challenge",
+          "description": "Tackle an advanced skill challenge",
+          "difficulty": "hard",
+          "taskType": "timed",
+          "config": { "timeLimit": 3600 },
+          "xpReward": 80
+        }
+      ]
+    },
+    {
+      "id": "creative",
+      "name": "Creative",
+      "description": "Artistic expression, innovation, content creation, and imagination",
+      "icon": "Sparkles",
+      "color": "hsl(320, 100%, 60%)",
+      "taskTemplates": [
+        {
+          "name": "Creative Expression",
+          "description": "Spend 15 minutes creating something artistic",
+          "difficulty": "easy",
+          "taskType": "timed",
+          "config": { "timeLimit": 900 },
+          "xpReward": 30
+        },
+        {
+          "name": "Idea Generation",
+          "description": "Brainstorm and document 10 creative ideas",
+          "difficulty": "medium",
+          "taskType": "timed",
+          "config": { "timeLimit": 1200 },
+          "xpReward": 45
+        },
+        {
+          "name": "Content Creation",
+          "description": "Create original content for 45 minutes",
+          "difficulty": "medium",
+          "taskType": "timed",
+          "config": { "timeLimit": 2700 },
+          "xpReward": 55
+        },
+        {
+          "name": "Masterpiece Creation",
+          "description": "Work on a significant creative project",
+          "difficulty": "hard",
+          "taskType": "timed",
+          "config": { "timeLimit": 5400 },
+          "xpReward": 85
+        }
+      ]
+    }
+  ]
+}
