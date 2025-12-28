@@ -123,6 +123,7 @@ export default function AchievementsPage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {achievements.map((achievement) => {
           const grade = (achievement.grade ?? "bronze") as keyof typeof gradeVisual;
+          const difficulty = (achievement.difficulty ?? "standard") as keyof typeof difficultyCopy;
           const unlocked = Boolean(achievement.isUnlocked);
           const visual = gradeVisual[grade];
 
@@ -159,7 +160,7 @@ export default function AchievementsPage() {
                           {achievement.grade}
                         </Badge>
                         <Badge variant="secondary" className="font-mono-tech text-[11px]">
-                          {difficultyCopy[achievement.difficulty]}
+                          {difficultyCopy[difficulty]}
                         </Badge>
                       </div>
                     </div>
