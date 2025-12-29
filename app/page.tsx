@@ -98,9 +98,9 @@ export default function Index() {
           {/* Stats preview */}
           <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mt-16 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
             {[
-              { label: "Active Runners", value: "12.4K" },
-              { label: "Tasks Completed", value: "1.2M" },
-              { label: "XP Earned", value: "48M" },
+              { label: "Daily check-ins today", value: "3,214" },
+              { label: "Avg streak length", value: "12 days" },
+              { label: "XP issued this week", value: "182k" },
             ].map((stat, index) => (
               <div key={index} className="text-center">
                 <p className="text-2xl font-bold text-foreground">{stat.value}</p>
@@ -258,9 +258,9 @@ export default function Index() {
           {/* Stats preview */}
           <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mt-16 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
             {[
-              { label: "Domains Available", value: "16" },
-              { label: "No of Tasks ", value: "100+" },
-              { label: "Levels to Grow", value: "50" },
+              { label: "Domains you can master", value: "12" },
+              { label: "Habits & missions", value: "180+" },
+              { label: "Level cap", value: "50" },
             ].map((stat, index) => (
               <div key={index} className="text-center">
                 <p className="text-2xl font-bold text-foreground">{stat.value}</p>
