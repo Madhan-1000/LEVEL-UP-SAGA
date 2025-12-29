@@ -99,6 +99,8 @@ export default function SignInPage() {
             </form>
 
             <p className="mt-4 text-center text-sm text-muted-foreground font-rajdhani">
+              <Button variant="link" className="px-1 font-rajdhani" onClick={() => router.push("/auth/forgot-password")}>Forgot password?</Button>
+              <span className="mx-1">·</span>
               No account?{" "}
               <Button variant="link" className="px-1 font-rajdhani" onClick={() => router.push("/auth/sign-up")}>Sign up</Button>
             </p>
