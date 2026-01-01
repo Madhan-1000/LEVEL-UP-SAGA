@@ -13,7 +13,7 @@ interface TaskCardProps {
   domainColor?: string;
   streak?: number;
   deadline?: string;
-  onComplete: (id: string) => void;
+  onComplete: (task: { id: string; title: string }) => void;
 }
 
 export function TaskCard({
@@ -47,7 +47,7 @@ export function TaskCard({
               id={id}
               checked={completed}
               onCheckedChange={(checked) => {
-                if (checked && !completed) onComplete(id)
+                if (checked && !completed) onComplete({ id, title })
               }}
             />
 
@@ -69,7 +69,7 @@ export function TaskCard({
 
             <h4
               className={cn(
-                "font-orbitron font-semibold text-base mb-1 transition-all duration-300",
+                "font-orbitron font-semibold text-lg mb-1 transition-all duration-300",
                 completed && "line-through text-muted-foreground"
               )}
             >
@@ -77,7 +77,7 @@ export function TaskCard({
             </h4>
             <p
               className={cn(
-                "text-sm text-muted-foreground font-rajdhani",
+                "text-base text-muted-foreground font-rajdhani",
                 completed && "line-through"
               )}
             >

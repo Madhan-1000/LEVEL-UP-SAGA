@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 import { getOrCreateUser } from "@/lib/user-service";
 import { assignTasksToUser, shouldAssignNewTasks } from "@/lib/task-assignment";
+import { calculateLevel } from "@/lib/game-logic";
 
 export async function POST() {
   try {
@@ -18,19 +19,52 @@ export async function POST() {
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    // Expire any previous-day pending/active tasks
-    await prisma.task.updateMany({
+    // Expire any previous-day pending/active tasks and apply XP penalties
+    const overdue = await prisma.task.findMany({
       where: {
         userId: user.id,
         status: { in: ["pending", "active"] },
         assignedAt: { lt: today },
       },
-      data: {
-        status: "failed",
-        result: "failure",
-        completedAt: new Date(),
-      },
+      include: { template: true },
     });
+
+    if (overdue.length) {
+      const penalty = overdue.reduce((sum, task) => {
+        // Penalize half the reward (rounded up) per missed task
+        const loss = Math.ceil((task.template?.xpReward ?? 0) * 0.5) || 5;
+        return sum + loss;
+      }, 0);
+
+      await prisma.$transaction(async (tx) => {
+        await tx.task.updateMany({
+          where: { id: { in: overdue.map((t) => t.id) } },
+          data: {
+            status: "failed",
+            result: "failure",
+            completedAt: new Date(),
+          },
+        });
+
+        if (penalty > 0) {
+          const progress = await tx.userProgress.findUnique({ where: { userId: user.id } });
+          if (progress) {
+            const newTotal = Math.max(0, progress.totalXpEarned - penalty);
+            const levelInfo = calculateLevel(newTotal);
+
+            await tx.userProgress.update({
+              where: { userId: user.id },
+              data: {
+                totalXpEarned: newTotal,
+                currentXp: levelInfo.currentXp,
+                currentLevel: levelInfo.level,
+                lastActivityAt: new Date(),
+              },
+            });
+          }
+        }
+      });
+    }
 
     // Check today's tasks
     const todayTasks = await prisma.task.findMany({

@@ -64,7 +64,6 @@ export default function Dashboard() {
   });
   const [experienceText, setExperienceText] = useState("");
   const [experienceSubmitting, setExperienceSubmitting] = useState(false);
-  const [experienceRecorded, setExperienceRecorded] = useState<Set<string>>(new Set());
 
   const { data: profile, isLoading: profileLoading } = useProfile();
   const { data: userDomains, isLoading: userDomainsLoading } = useUserDomains();
@@ -132,11 +131,26 @@ export default function Dashboard() {
     return Array.from(byId.values());
   }, [pendingTasks, activeTasks, completedTasks]);
 
+  const dailyTasks = useMemo(() => {
+    if (!allTasks.length) return [] as any[];
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(start);
+    end.setDate(end.getDate() + 1);
+
+    return allTasks.filter((t: any) => {
+      const assigned = new Date(t.assignedAt);
+      return assigned >= start && assigned < end;
+    });
+  }, [allTasks]);
+
   // Calculate stats
-  const completedCount = allTasks.filter((t: any) => t.status === "completed").length;
-  const totalTasksCount = allTasks.length;
+  const completedTodayCount = dailyTasks.filter((t: any) => t.status === "completed").length;
+  const dailyTasksCount = dailyTasks.length;
   const completionRate =
-    totalTasksCount > 0 ? Math.round((completedCount / totalTasksCount) * 100) : 0;
+    dailyTasksCount > 0 ? Math.round((completedTodayCount / dailyTasksCount) * 100) : 0;
+  const totalCompletedAll = allTasks.filter((t: any) => t.status === "completed").length;
+  const totalTasksCount = allTasks.length;
 
   const completedToday = useMemo(() => {
     if (!allTasks.length) return false;
@@ -191,46 +205,9 @@ export default function Dashboard() {
   }, [isLoaded, user]);
 
   const openExperienceModal = (taskId: string, taskTitle: string) => {
-    if (!taskId || experienceRecorded.has(taskId)) return;
+    if (!taskId) return;
     setExperienceText("");
     setExperienceModal({ open: true, taskId, taskTitle: taskTitle || "Task" });
-  };
-
-  const handleSubmitExperience = async (skipped = false) => {
-    if (!experienceModal.taskId) return;
-
-    try {
-      setExperienceSubmitting(true);
-      const resp = await fetch("/api/task-experiences", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          taskId: experienceModal.taskId,
-          content: skipped ? "" : experienceText,
-          skipped,
-        }),
-      });
-
-      const data = await resp.json().catch(() => ({}));
-      if (!resp.ok) throw new Error(data.error || "Failed to save experience");
-
-      setExperienceRecorded((prev) => {
-        const next = new Set(prev);
-        next.add(experienceModal.taskId);
-        return next;
-      });
-
-      setExperienceModal({ open: false, taskId: "", taskTitle: "" });
-      setExperienceText("");
-
-      if (!skipped) {
-        toast({ title: "Saved", description: "Experience logged." });
-      }
-    } catch (err: any) {
-      toast({ title: "Could not save", description: err.message, variant: "destructive" });
-    } finally {
-      setExperienceSubmitting(false);
-    }
   };
 
   const handleSaveFocusHours = async () => {
@@ -271,9 +248,10 @@ export default function Dashboard() {
     setFocusSummary((prev) => ({ ...prev, hasLoggedToday: true }));
   };
 
-  const handleTaskComplete = async (taskId: string) => {
+  const handleTaskComplete = async (taskId: string, note: string) => {
     try {
-      const result = await completeTaskMutation.mutateAsync({ taskId });
+      const trimmedNote = note.trim();
+      const result = await completeTaskMutation.mutateAsync({ taskId, reviewNotes: trimmedNote });
 
       if (result.cheatDetected) {
         toast({
@@ -303,8 +281,12 @@ export default function Dashboard() {
           });
         }
 
-        const taskDetails = allTasks.find((t: any) => t.id === taskId);
-        openExperienceModal(taskId, taskDetails?.template?.name ?? "Task");
+        // Persist reflection
+        await fetch("/api/task-experiences", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ taskId, content: trimmedNote, skipped: false }),
+        }).catch(() => undefined);
 
         const newCompleted = completedCount + 1;
         if (newCompleted >= totalTasksCount && totalTasksCount > 0 && !focusSummary.hasLoggedToday) {
@@ -317,6 +299,27 @@ export default function Dashboard() {
         description: "Failed to complete task. Please try again.",
         variant: "destructive",
       });
+    }
+  };
+
+  const handleSubmitExperience = async () => {
+    if (!experienceModal.taskId) return;
+
+    const note = experienceText.trim();
+    if (!note) {
+      toast({ title: "Add a quick note", description: "Please describe how you completed the task.", variant: "destructive" });
+      return;
+    }
+
+    try {
+      setExperienceSubmitting(true);
+      await handleTaskComplete(experienceModal.taskId, note);
+      setExperienceModal({ open: false, taskId: "", taskTitle: "" });
+      setExperienceText("");
+    } catch (err: any) {
+      toast({ title: "Could not save", description: err?.message || "Try again." });
+    } finally {
+      setExperienceSubmitting(false);
     }
   };
 
@@ -399,7 +402,7 @@ export default function Dashboard() {
                     Today's Progress
                   </p>
                   <p className="font-orbitron font-bold text-xl">
-                    {completedCount}/{totalTasksCount}
+                    {completedTodayCount}/{dailyTasksCount}
                   </p>
                 </div>
               </div>
@@ -441,8 +444,8 @@ export default function Dashboard() {
                       <Loader2 className="w-6 h-6 animate-spin text-primary" />
                       <span className="ml-2 text-sm text-muted-foreground">Loading tasks...</span>
                     </div>
-                  ) : allTasks.length > 0 ? (
-                    allTasks.map((task: any, index: number) => (
+                  ) : dailyTasks.length > 0 ? (
+                    dailyTasks.map((task: any, index: number) => (
                       <div
                         key={task.id}
                         className="animate-fade-in-up"
@@ -458,7 +461,7 @@ export default function Dashboard() {
                           domainColor={task.template.domain.color}
                           streak={profile?.currentStreak ?? profile?.progress?.currentStreak ?? 0}
                           deadline={task.deadlineAt}
-                          onComplete={handleTaskComplete}
+                          onComplete={({ id }) => openExperienceModal(id, task.template.name)}
                         />
                       </div>
                     ))
@@ -500,7 +503,7 @@ export default function Dashboard() {
                           domainColor={task.template.domain.color}
                           streak={profile?.currentStreak ?? profile?.progress?.currentStreak ?? 0}
                           deadline={task.deadlineAt}
-                          onComplete={handleTaskComplete}
+                          onComplete={({ id }) => openExperienceModal(id, task.template.name)}
                         />
                       </div>
                     ))
@@ -604,7 +607,7 @@ export default function Dashboard() {
 
                 <div className="space-y-3">
                   {[
-                    { label: "Tasks Completed", value: completedCount.toString() },
+                    { label: "Tasks Completed", value: totalCompletedAll.toString() },
                     { label: "XP Earned", value: (profile?.progress?.totalXpEarned ?? 0).toString() },
                     {
                       label: "Hours Focused",
@@ -617,7 +620,7 @@ export default function Dashboard() {
                       key={stat.label}
                       className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
                     >
-                      <span className="text-sm text-muted-foreground font-rajdhani">{stat.label}</span>
+                        <span className="text-sm text-muted-foreground font-rajdhani">{stat.label}</span>
                       <span className="font-mono-tech font-bold text-foreground">{stat.value}</span>
                     </div>
                   ))}
@@ -628,11 +631,11 @@ export default function Dashboard() {
         </div>
       </main>
 
-      {/* Task Experience Modal */}
+      {/* Task Experience Modal (mandatory note) */}
       <Dialog open={experienceModal.open} onOpenChange={(open) => open === false && setExperienceModal({ open: false, taskId: "", taskTitle: "" })}>
         <DialogContent className="sm:max-w-xl bg-card/95 backdrop-blur border border-primary/20 shadow-2xl">
           <DialogHeader>
-            <DialogTitle className="font-orbitron text-xl">How did this task feel?</DialogTitle>
+            <DialogTitle className="font-orbitron text-xl">Log your completion</DialogTitle>
             <DialogDescription className="text-muted-foreground font-rajdhani">
               {experienceModal.taskTitle || "Task"}
             </DialogDescription>
@@ -640,32 +643,25 @@ export default function Dashboard() {
 
           <div className="space-y-3">
             <Label htmlFor="experience" className="text-sm text-foreground font-rajdhani">
-              Share a quick note (optional)
+              Add a quick note (required)
             </Label>
             <Textarea
               id="experience"
               value={experienceText}
               onChange={(e) => setExperienceText(e.target.value)}
-              placeholder="What was challenging? What went well?"
+              placeholder="What did you do? Any obstacles?"
               className="min-h-[140px] font-rajdhani"
+              required
             />
           </div>
 
           <DialogFooter className="flex items-center justify-end gap-3">
             <Button
               type="button"
-              variant="ghost"
-              onClick={() => handleSubmitExperience(true)}
+              onClick={handleSubmitExperience}
               disabled={experienceSubmitting}
             >
-              Skip
-            </Button>
-            <Button
-              type="button"
-              onClick={() => handleSubmitExperience(false)}
-              disabled={experienceSubmitting}
-            >
-              {experienceSubmitting ? "Saving..." : "Save"}
+              {experienceSubmitting ? "Saving..." : "Save & complete"}
             </Button>
           </DialogFooter>
         </DialogContent>

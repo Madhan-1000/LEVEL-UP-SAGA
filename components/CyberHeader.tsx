@@ -3,19 +3,23 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
+import { useState } from 'react'
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Zap, LayoutDashboard, Target, LogIn, Activity, Info, Trophy } from "lucide-react";
+import { Zap, LayoutDashboard, Target, LogIn, Activity, Info, Trophy, Menu, X, Route } from "lucide-react";
 import { AccountMenu } from "@/components/AccountMenu";
 
 export function CyberHeader() {
   const pathname = usePathname();
   const { user, isLoaded } = useUser();
 
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   const navItems = [
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/onboarding", label: "Domains", icon: Target },
     { href: "/timeline", label: "Activity", icon: Activity },
+    { href: "/journey", label: "Journey", icon: Route },
     { href: "/achievements", label: "Achievements", icon: Trophy },
     { href: "/help", label: "Help", icon: Info }
   ];
@@ -66,6 +70,18 @@ export function CyberHeader() {
             </nav>
           )}
 
+          {/* Mobile menu toggle */}
+          {isLoaded && visibleNavItems.length > 0 && (
+            <Button
+              variant="outline"
+              size="icon"
+              className="md:hidden"
+              onClick={() => setMobileOpen((v) => !v)}
+            >
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </Button>
+          )}
+
           {/* Auth Button / Account Menu */}
           {isLoaded && user ? (
             <AccountMenu />
@@ -80,6 +96,32 @@ export function CyberHeader() {
           )}
         </div>
       </div>
+
+      {/* Mobile dropdown */}
+      {isLoaded && visibleNavItems.length > 0 && mobileOpen && (
+        <div className="md:hidden border-b border-primary/20 bg-background/95 backdrop-blur-xl">
+          <div className="container mx-auto px-4 py-3 flex flex-col gap-2">
+            {visibleNavItems.map((item) => {
+              const isActive = pathname === item.href;
+              const Icon = item.icon;
+              return (
+                <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)}>
+                  <Button
+                    variant="ghost"
+                    className={cn(
+                      "w-full justify-start gap-3 font-rajdhani",
+                      isActive && "bg-primary/10 text-primary"
+                    )}
+                  >
+                    <Icon className="w-5 h-5" />
+                    {item.label}
+                  </Button>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </header>
   );
 }
